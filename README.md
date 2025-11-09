@@ -7,6 +7,9 @@
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
+## Start Data Analysis
+venv\Scripts\activate
+jupyter notebook
 
 ## 🧠 About the Project
 

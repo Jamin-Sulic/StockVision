@@ -1,0 +1,36 @@
+# Environment
+.env
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Data (zu groß für Git)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Models (zu groß für Git)
+models/saved_models/*
+models/checkpoints/*
+!models/saved_models/.gitkeep
+!models/checkpoints/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
