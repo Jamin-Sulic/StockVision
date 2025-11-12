@@ -1,0 +1,21 @@
+timestamp,experiment_name,ticker,sequence_length,train_samples,test_samples,n_features,epochs_trained,mse,rmse,mae,mape,directional_accuracy,model_params,notes,model_type,accuracy,precision,recall,f1_score
+2025-11-10 20:33:58,seq90_regression_macd,AAPL,90,1650,284,8,22,391.3842751829447,19.78343436269205,16.338501557506707,7.49455798093113,56.53710247349824,33301,Baseline after testing,,,,,
+2025-11-10 20:57:41,seq90_macd_features,AAPL,90,1657,286,6,22,65.79985287138187,8.111710847372573,6.62603182429129,3.2896839717597777,53.68421052631579,32901,Baseline,,,,,
+2025-11-11 01:17:22,seq90_direction_binary,AAPL,90,1650,284,17,16,,,,,,132701,Binary classifier with MACD features and class weights,classification,55.633802816901415,55.633802816901415,100.0,71.49321266968327
+2025-11-11 02:17:34,seq90_direction_binary,AAPL,60,1680,314,17,17,,,,,,132701,Binary classifier with MACD features and class weights,classification,56.05095541401274,56.05095541401274,100.0,71.83673469387756
+2025-11-11 02:32:23,seq90_direction_binary,AAPL,60,1680,314,17,16,,,,,,85313,Binary classifier with MACD features and class weights,classification,42.35668789808918,40.0,5.681818181818182,9.950248756218905
+2025-11-11 02:34:32,seq90_direction_binary,AAPL,60,1680,314,17,17,,,,,,85313,Binary classifier with MACD features and class weights,classification,45.85987261146497,80.0,4.545454545454546,8.60215053763441
+2025-11-12 02:45:17,seq30_direction_simple,AAPL,30,1710,344,6,32,,,,,,5537,Simplified classifier for debugging,classification,54.94186046511628,56.13496932515337,93.84615384615384,70.24952015355086
+2025-11-12 02:45:34,seq30_direction_simple,AAPL,30,1710,344,6,23,,,,,,5537,Simplified classifier for debugging,classification,56.68604651162791,56.68604651162791,100.0,72.35621521335808
+2025-11-12 02:50:17,seq30_direction_simple,AAPL,30,1710,344,6,21,,,,,,5537,Simplified classifier for debugging,classification,54.65116279069767,56.00000000000001,93.33333333333331,70.0
+2025-11-12 02:51:56,seq30_direction_simple,AAPL,90,1650,284,6,22,,,,,,5537,Simplified classifier for debugging,classification,46.83098591549296,52.41379310344828,48.10126582278481,50.16501650165017
+2025-11-12 02:53:38,seq30_direction_simple,AAPL,30,1710,344,6,21,,,,,,5537,Simplified classifier for debugging,classification,56.97674418604651,57.05705705705706,97.43589743589745,71.96969696969697
+2025-11-12 02:56:03,seq30_direction_simple,AAPL,30,1710,344,6,21,,,,,,5537,Simplified classifier for debugging,classification,56.68604651162791,56.68604651162791,100.0,72.35621521335808
+2025-11-12 02:56:46,seq30_direction_simple,AAPL,30,1710,344,6,21,,,,,,5537,Simplified classifier for debugging,classification,56.395348837209305,56.5597667638484,99.48717948717947,72.11895910780669
+2025-11-12 03:00:10,seq30_direction_simple,AAPL,30,1710,344,6,21,,,,,,5537,Simplified classifier for debugging,classification,56.68604651162791,56.68604651162791,100.0,72.35621521335808
+2025-11-12 03:00:27,seq30_direction_simple,AAPL,30,1710,344,6,23,,,,,,5537,Simplified classifier for debugging,classification,56.68604651162791,56.68604651162791,100.0,72.35621521335808
+2025-11-12 03:00:44,seq30_direction_simple,AAPL,30,1710,344,6,21,,,,,,5537,Simplified classifier for debugging,classification,55.52325581395349,59.72222222222222,66.15384615384615,62.77372262773723
+2025-11-12 03:08:25,seq30_direction_simple,AAPL,30,1710,344,6,31,,,,,,5537,Simplified classifier for debugging,classification,56.97674418604651,0.0,0.0,0.0
+2025-11-12 03:11:14,seq30_direction_simple,AAPL,30,1710,344,6,31,,,,,,5537,Simplified classifier for debugging,classification,56.97674418604651,0.0,0.0,0.0
+2025-11-12 03:11:33,seq30_direction_simple,AAPL,30,1710,344,6,25,,,,,,5537,Simplified classifier for debugging,classification,50.872093023255815,34.32835820895522,15.54054054054054,21.3953488372093
+2025-11-12 03:15:57,seq30_direction_simple,AAPL,30,1710,344,6,28,,,,,,5537,Simplified classifier for debugging,classification,56.97674418604651,0.0,0.0,0.0
