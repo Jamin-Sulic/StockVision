@@ -12,10 +12,19 @@ data/processed/*
 !data/processed/.gitkeep
 
 # Models (zu groß für Git)
+models/*
+!models/.gitkeep
 models/saved_models/*
 models/checkpoints/*
 !models/saved_models/.gitkeep
 !models/checkpoints/.gitkeep
+*.pkl
+*.pb
+*.h5
+*.keras
+*.joblib
+*.onnx
+*.ckpt
 
 # Jupyter
 .ipynb_checkpoints/
