@@ -11,7 +11,7 @@
 venv\Scripts\activate
 jupyter notebook
 
-## 🧠 About the Project
+## About the Project
 
 **StockVision** is an AI-powered platform that predicts future stock movements using deep learning.  
 It combines a **TensorFlow LSTM neural network** with a modern **Next.js frontend**, offering users real-time insights and buy/sell recommendations based on stock market data from **Yahoo Finance**.
