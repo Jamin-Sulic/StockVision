@@ -6,7 +6,7 @@ import {
   ResponsiveContainer, ReferenceLine, CartesianGrid
 } from "recharts";
 
-const API = "http://localhost:8000";
+const API = "https://stockvision-production.up.railway.app";
 
 const TICKERS = [
   "AAPL", "MSFT", "GOOGL", "TSLA", "AMZN", "META", "NVDA",
