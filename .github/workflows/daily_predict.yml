@@ -1,0 +1,39 @@
+name: Daily Stock Predictions
+
+on:
+  schedule:
+    - cron: "0 22 * * 1-5"  # 22:00 UTC = 23:00 CET / Montag-Freitag
+  workflow_dispatch:          # Manuell auslösbar im GitHub UI
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily predictions
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          python scripts/daily_predict.py --tickers AAPL JPM NVDA V AMZN META MSFT GOOGL
+
+      - name: Done
+        run: echo "Predictions updated for $(date)"
