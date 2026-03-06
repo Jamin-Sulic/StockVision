@@ -193,7 +193,7 @@ function EquityChart({ data, dates }: { data: { bh: number[]; xgb: number[]; sco
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function Home() {
-  const [ticker, setTicker] = useState("AAPL");
+  const [ticker, setTicker] = useState<string | null>(null);
   const [mode, setMode] = useState<"live" | "historical">("live");
   const [liveData, setLiveData] = useState<LiveData | null>(null);
   const [histData, setHistData] = useState<HistoricalData | null>(null);
@@ -204,9 +204,9 @@ export default function Home() {
 
   function translateError(msg: string): string {
     if (msg.includes("Keine Prediction") || msg.includes("404") || msg.includes("not found"))
-      return `No prediction found for ${ticker}. Run: python scripts/daily_predict.py --tickers ${ticker}`;
+      return "No prediction found.";
     if (msg.includes("Keine Daten") || msg.includes("No data"))
-      return `No market data available for ${ticker} in the selected date range.`;
+      return "No market data available in the selected date range.";
     if (msg.includes("Failed to fetch") || msg.includes("NetworkError"))
       return "Cannot connect to API. Make sure the FastAPI server is running on port 8000.";
     if (msg.includes("Mindestens"))
@@ -216,7 +216,7 @@ export default function Home() {
     return msg;
   }
 
-  async function fetchLive(t = ticker) {
+  async function fetchLive(t: string) {
     setLoading(true);
     setError(null);
     setLiveData(null);
@@ -232,6 +232,7 @@ export default function Home() {
   }
 
   async function fetchHistorical() {
+    if (!ticker) return;
     setLoading(true);
     setError(null);
     setHistData(null);
@@ -246,10 +247,21 @@ export default function Home() {
     }
   }
 
+  function handleTickerSelect(t: string) {
+    setTicker(t);
+    setLiveData(null);
+    setHistData(null);
+    setError(null);
+    if (mode === "live") fetchLive(t);
+  }
+
   useEffect(() => {
+    if (!ticker) return;
+    setLiveData(null);
+    setHistData(null);
+    setError(null);
     if (mode === "live") fetchLive(ticker);
-    else { setHistData(null); setError(null); }
-  }, [ticker, mode]);
+  }, [mode]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
@@ -276,7 +288,7 @@ export default function Home() {
 
         {/* Controls */}
         <div className="flex flex-wrap items-center gap-3">
-          <TickerSearch value={ticker} onChange={t => { setTicker(t); setHistData(null); }} />
+          <TickerSearch value={ticker ?? ""} onChange={handleTickerSelect} />
 
           {/* Mode Toggle */}
           <div className="flex gap-1 bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-1 ml-auto">
@@ -299,8 +311,8 @@ export default function Home() {
             <span className="text-zinc-600 text-xs">→</span>
             <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)}
               className="bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-blue-500/60" />
-            <button onClick={fetchHistorical}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white text-xs font-bold rounded-lg transition-colors">
+            <button onClick={fetchHistorical} disabled={!ticker}
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-400 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg transition-colors">
               RUN BACKTEST
             </button>
             {histData?.from_cache && (
@@ -309,25 +321,47 @@ export default function Home() {
           </div>
         )}
 
-        {/* Loading / Error */}
+        {/* Empty state */}
+        {!ticker && !loading && (
+          <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+              <svg className="w-6 h-6 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 13l4-4 4 4 4-6 4 3" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-bold text-zinc-300">Select a ticker for analysis</p>
+              <p className="text-xs text-zinc-500 mt-1">Search for a stock symbol above to see predictions and backtest results.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Loading */}
         {loading && (
           <div className="flex items-center gap-3 py-12 justify-center text-zinc-500">
             <div className="w-5 h-5 border-2 border-blue-500/40 border-t-blue-500 rounded-full animate-spin" />
             <span className="text-sm">{mode === "historical" ? "Computing backtest (LSTM + XGBoost)..." : "Loading prediction..."}</span>
           </div>
         )}
+
+        {/* Error */}
         {error && !loading && (
-          <div className="bg-zinc-900/60 border border-zinc-700/40 rounded-xl p-8 flex flex-col items-center gap-3 text-center">
-            <span className="text-3xl">🚧</span>
-            <p className="text-sm font-bold text-zinc-200">{ticker} — Coming Soon</p>
-            <p className="text-xs text-zinc-500">This ticker is not available yet. Check back later.</p>
+          <div className="bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-8 flex flex-col items-center gap-3 text-center">
+            <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+              <svg className="w-5 h-5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-bold text-zinc-200">{ticker} — Coming Soon</p>
+              <p className="text-xs text-zinc-500 mt-1">This ticker is not available yet. Check back later.</p>
+            </div>
           </div>
         )}
 
         {/* Live View */}
         {mode === "live" && liveData && !loading && (
           <div className="space-y-4">
-            {/* Top Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Signal Card */}
               <div className="md:col-span-1 bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-5 space-y-4">
