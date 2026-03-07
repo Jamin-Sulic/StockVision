@@ -278,6 +278,9 @@ def train_scorer(ticker, df_test, xgb_proba, xgb_preds, lstm_preds_test,
         win_rate = 0.5
         agreement_rate = 0.5
 
+    vol_mean = float(df_test["target_return"].rolling(21).std().mean())
+    vol_std  = float(df_test["target_return"].rolling(21).std().std())
+
     print(f"  [Scorer] Threshold: {threshold:.4f}  Agreement: {agreement_rate:.4f}  Win Rate: {win_rate:.4f}")
 
     save_dir.mkdir(parents=True, exist_ok=True)
@@ -288,7 +291,11 @@ def train_scorer(ticker, df_test, xgb_proba, xgb_preds, lstm_preds_test,
             "weights":        weights,
             "agreement_rate": float(agreement_rate),
             "win_rate":       float(win_rate),
-            "trained_at":     datetime.now().isoformat()
+            "trained_at":     datetime.now().isoformat(),
+            "vol_stats": {
+                "mean": vol_mean,
+                "std":  vol_std
+            }
         }, f, indent=2)
 
     # Save test predictions

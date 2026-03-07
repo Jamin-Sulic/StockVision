@@ -1,0 +1,16 @@
+{
+  "ticker": "V",
+  "threshold": 0.3638204974030394,
+  "weights": {
+    "lstm_magnitude": 0.35,
+    "xgb_confidence": 0.4,
+    "agreement": 0.25
+  },
+  "agreement_rate": 0.8150224215246636,
+  "win_rate": 0.5658263305322129,
+  "trained_at": "2026-03-07T02:28:49.533842",
+  "vol_stats": {
+    "mean": 0.011803004262114865,
+    "std": 0.004352227609752395
+  }
+}

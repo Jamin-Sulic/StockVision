@@ -1,0 +1,16 @@
+{
+  "ticker": "AMD",
+  "threshold": 0.3341697453087524,
+  "weights": {
+    "lstm_magnitude": 0.35,
+    "xgb_confidence": 0.4,
+    "agreement": 0.25
+  },
+  "agreement_rate": 0.773542600896861,
+  "win_rate": 0.5266106442577031,
+  "trained_at": "2026-03-07T02:33:05.492343",
+  "vol_stats": {
+    "mean": 0.03220436249546544,
+    "std": 0.01032065219850136
+  }
+}

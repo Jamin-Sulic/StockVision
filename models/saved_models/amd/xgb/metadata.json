@@ -1,0 +1,33 @@
+{
+  "ticker": "AMD",
+  "accuracy": 0.5283613445378151,
+  "auc": 0.5181649523792656,
+  "trained_at": "2026-03-07T02:32:09.154924",
+  "n_train": 1768,
+  "n_test": 952,
+  "features": [
+    "return_1d",
+    "return_3d",
+    "return_5d",
+    "return_10d",
+    "return_21d",
+    "dist_ma7",
+    "dist_ma30",
+    "dist_ma90",
+    "ma7_vs_ma30",
+    "bb_position",
+    "bb_width",
+    "macd_norm",
+    "macd_signal_norm",
+    "macd_hist",
+    "rsi",
+    "volatility",
+    "volume_ratio",
+    "atr_norm",
+    "hl_spread",
+    "stochastic",
+    "mom_5_norm",
+    "mom_10_norm",
+    "lstm_pred_return"
+  ]
+}

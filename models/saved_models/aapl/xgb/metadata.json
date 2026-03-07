@@ -1,0 +1,16 @@
+{
+  "type": "xgboost_v2a_final_5d_forward_return",
+  "best_params": {
+    "max_depth": 2,
+    "learning_rate": 0.02,
+    "min_child_weight": 10,
+    "subsample": 0.7
+  },
+  "metrics": {
+    "test_accuracy": 0.6011904761904762,
+    "test_auc": 0.5756909992912828,
+    "test_f1": 0.6256983240223464,
+    "baseline": 0.5059523809523809,
+    "overfitting_gap": 0.013710780542019352
+  }
+}

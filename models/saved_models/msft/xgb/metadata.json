@@ -1,0 +1,33 @@
+{
+  "ticker": "MSFT",
+  "accuracy": 0.5745798319327731,
+  "auc": 0.509152052723046,
+  "trained_at": "2026-03-07T01:54:05.168492",
+  "n_train": 1768,
+  "n_test": 952,
+  "features": [
+    "return_1d",
+    "return_3d",
+    "return_5d",
+    "return_10d",
+    "return_21d",
+    "dist_ma7",
+    "dist_ma30",
+    "dist_ma90",
+    "ma7_vs_ma30",
+    "bb_position",
+    "bb_width",
+    "macd_norm",
+    "macd_signal_norm",
+    "macd_hist",
+    "rsi",
+    "volatility",
+    "volume_ratio",
+    "atr_norm",
+    "hl_spread",
+    "stochastic",
+    "mom_5_norm",
+    "mom_10_norm",
+    "lstm_pred_return"
+  ]
+}

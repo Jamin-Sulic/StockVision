@@ -1,0 +1,33 @@
+{
+  "ticker": "AAPL",
+  "period": "2024-01-23 to 2024-12-20",
+  "strategies": {
+    "Buy & Hold": {
+      "total_return": 0.05062857353363797,
+      "annual_return": 0.07689611931264051,
+      "sharpe": 0.4261208080750044,
+      "max_drawdown": -0.22851757697285258,
+      "win_rate": 0.5449101796407185,
+      "profit_factor": 1.058280620590105,
+      "n_trades": 167
+    },
+    "XGBoost direkt": {
+      "total_return": 0.10553042295605591,
+      "annual_return": 0.16240119446312784,
+      "sharpe": 1.1713432082157387,
+      "max_drawdown": -0.1263742302010025,
+      "win_rate": 0.5729166666666666,
+      "profit_factor": 1.203211593494873,
+      "n_trades": 96
+    },
+    "XGBoost + Scorer": {
+      "total_return": 0.11153701149762546,
+      "annual_return": 0.17188742037628368,
+      "sharpe": 1.2424576261016118,
+      "max_drawdown": -0.1257456331964826,
+      "win_rate": 0.5851063829787234,
+      "profit_factor": 1.2155523067981813,
+      "n_trades": 94
+    }
+  }
+}

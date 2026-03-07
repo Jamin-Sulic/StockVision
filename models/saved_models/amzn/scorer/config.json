@@ -1,0 +1,16 @@
+{
+  "ticker": "AMZN",
+  "threshold": 0.3332284596218793,
+  "weights": {
+    "lstm_magnitude": 0.35,
+    "xgb_confidence": 0.4,
+    "agreement": 0.25
+  },
+  "agreement_rate": 0.6367713004484304,
+  "win_rate": 0.50997150997151,
+  "trained_at": "2026-03-07T02:03:43.642733",
+  "vol_stats": {
+    "mean": 0.020261454912097243,
+    "std": 0.00686777861183144
+  }
+}
