@@ -16,7 +16,6 @@ data/processed/*
 # Models (zu groß für Git)
 models/*
 !models/.gitkeep
-models/saved_models/*
 models/checkpoints/*
 !models/saved_models/.gitkeep
 !models/checkpoints/.gitkeep
