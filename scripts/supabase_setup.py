@@ -30,11 +30,11 @@ SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")  # service_role key
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise ValueError(
         "SUPABASE_URL und SUPABASE_SERVICE_KEY fehlen in .env\n"
-        "➡️ Supabase Dashboard → Settings → API → Keys kopieren"
+        "Supabase Dashboard → Settings → API → Keys kopieren"
     )
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-print(f"✅ Supabase verbunden: {SUPABASE_URL}")
+print(f"Supabase verbunden: {SUPABASE_URL}")
 
 # ==========================================
 # Test 1: Tabellen prüfen
@@ -44,9 +44,9 @@ tables = ["predictions", "market_data", "backtest_results", "available_models"]
 for table in tables:
     try:
         res = supabase.table(table).select("id").limit(1).execute()
-        print(f"  ✅ {table}")
+        print(f"{table}")
     except Exception as e:
-        print(f"  ❌ {table}: {e}")
+        print(f"{table}: {e}")
 
 # ==========================================
 # Test 2: AAPL Market Data hochladen
@@ -57,7 +57,7 @@ DATA_DIR   = PROJECT_ROOT / "data" / "processed"
 feat_path  = DATA_DIR / "AAPL_features_stationary.csv"
 
 if not feat_path.exists():
-    print(f"  ⚠️  {feat_path} nicht gefunden → skip")
+    print(f"{feat_path} nicht gefunden → skip")
 else:
     feat = pd.read_csv(feat_path, index_col=0, parse_dates=True)
 
@@ -122,9 +122,9 @@ else:
             uploaded += len(batch)
             print(f"  Uploaded {uploaded}/{total} rows...", end="\r")
         except Exception as e:
-            print(f"\n  ❌ Batch {i}-{i+BATCH_SIZE}: {e}")
+            print(f"\n Batch {i}-{i+BATCH_SIZE}: {e}")
 
-    print(f"\n  ✅ AAPL Market Data: {uploaded} Rows hochgeladen")
+    print(f"\n AAPL Market Data: {uploaded} Rows hochgeladen")
 
 # ==========================================
 # Test 3: Verify
@@ -150,7 +150,7 @@ for m in res.data:
     print(f"  {m['ticker']}: acc={m['test_accuracy']}, aktiv={m['is_active']}")
 
 print("\n" + "="*50)
-print("✅ Supabase Setup komplett!")
+print("Supabase Setup komplett!")
 print("="*50)
 print("\nNächste Schritte:")
 print("  1. .env Datei erstellen (siehe oben)")
