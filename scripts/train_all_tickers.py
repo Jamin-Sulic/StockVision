@@ -161,7 +161,7 @@ def train_lstm(ticker, df, save_dir):
 
     # Save
     save_dir.mkdir(parents=True, exist_ok=True)
-    model.save(save_dir / "model.keras")
+    model.save(save_dir / "model.h5")
     with open(save_dir / "scaler.pkl", "wb") as f:
         pickle.dump({
             "feature_scaler": scaler,
@@ -343,7 +343,7 @@ def train_ticker(ticker, skip_existing=False):
     xgb_dir      = ticker_dir / "xgb"
     scorer_dir   = ticker_dir / "scorer"
 
-    if skip_existing and (lstm_dir / "model.keras").exists() and (xgb_dir / "model.json").exists():
+    if skip_existing and (lstm_dir / "model.h5").exists() and (xgb_dir / "model.json").exists():
         print(f"  Skipping {ticker} (already trained)")
         return True
 

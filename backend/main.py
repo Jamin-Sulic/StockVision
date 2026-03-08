@@ -343,11 +343,16 @@ def _run_backtest(ticker: str, data: list, start_date: date, end_date: date) -> 
         return 0.5 * mse + 0.5 * directional
 
     lstm_dir = PROJECT_ROOT / "models" / "saved_models" / ticker.lower() / "lstm"
-    if not (lstm_dir / "model.keras").exists():
+    if not (lstm_dir / "model.h5").exists():
         lstm_dir = PROJECT_ROOT / "models" / "saved_models" / "aapl" / "lstm"
 
+    # Unterstützt h5 und keras
+    model_path = lstm_dir / "model.h5"
+    if not model_path.exists():
+        model_path = lstm_dir / "model.keras"
+
     lstm_model = keras.models.load_model(
-        lstm_dir / "model.keras",
+        model_path,
         custom_objects={"directional_loss": directional_loss}
     )
     with open(lstm_dir / "scaler.pkl", "rb") as f:

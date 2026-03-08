@@ -1,16 +1,33 @@
 {
-  "type": "xgboost_v2a_final_5d_forward_return",
-  "best_params": {
-    "max_depth": 2,
-    "learning_rate": 0.02,
-    "min_child_weight": 10,
-    "subsample": 0.7
-  },
-  "metrics": {
-    "test_accuracy": 0.6011904761904762,
-    "test_auc": 0.5756909992912828,
-    "test_f1": 0.6256983240223464,
-    "baseline": 0.5059523809523809,
-    "overfitting_gap": 0.013710780542019352
-  }
+  "ticker": "AAPL",
+  "accuracy": 0.5525210084033614,
+  "auc": 0.5207094914225532,
+  "trained_at": "2026-03-07T13:38:48.679215",
+  "n_train": 1768,
+  "n_test": 952,
+  "features": [
+    "return_1d",
+    "return_3d",
+    "return_5d",
+    "return_10d",
+    "return_21d",
+    "dist_ma7",
+    "dist_ma30",
+    "dist_ma90",
+    "ma7_vs_ma30",
+    "bb_position",
+    "bb_width",
+    "macd_norm",
+    "macd_signal_norm",
+    "macd_hist",
+    "rsi",
+    "volatility",
+    "volume_ratio",
+    "atr_norm",
+    "hl_spread",
+    "stochastic",
+    "mom_5_norm",
+    "mom_10_norm",
+    "lstm_pred_return"
+  ]
 }

@@ -1,47 +1,7 @@
 {
-  "type": "lstm_return_regression_v4",
   "ticker": "AAPL",
-  "lookback": 90,
-  "features": [
-    "return_1d",
-    "return_3d",
-    "return_5d",
-    "return_10d",
-    "return_21d",
-    "dist_ma7",
-    "dist_ma30",
-    "dist_ma90",
-    "ma7_vs_ma30",
-    "bb_position",
-    "bb_width",
-    "macd_norm",
-    "macd_signal_norm",
-    "macd_hist",
-    "rsi",
-    "volatility",
-    "volume_ratio",
-    "atr_norm",
-    "hl_spread",
-    "stochastic",
-    "mom_5_norm",
-    "mom_10_norm"
-  ],
-  "target": "Return_Next",
-  "return_std": 0.018496907455240623,
-  "price_metrics": {
-    "mae": 2.075955390930176,
-    "rmse": 2.83712100982666,
-    "mape": 1.0170530329128182,
-    "directional_accuracy": 0.5461254612546126
-  },
-  "baseline_price_metrics": {
-    "mae": 2.087563991546631,
-    "rmse": 2.8442938327789307,
-    "mape": 1.0186095219691473
-  },
-  "data_range": {
-    "start": "2015-06-11",
-    "end": "2024-12-27"
-  },
-  "trained_until": "2024-12-27"
+  "dir_acc": 0.518796992481203,
+  "trained_at": "2026-03-07T13:35:51.854527",
+  "n_train": 1729,
+  "n_test": 931
 }

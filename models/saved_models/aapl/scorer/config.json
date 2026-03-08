@@ -1,23 +1,16 @@
 {
-  "type": "confidence_scorer",
   "ticker": "AAPL",
-  "threshold": 0.2,
+  "threshold": 0.3557138983002107,
   "weights": {
     "lstm_magnitude": 0.35,
     "xgb_confidence": 0.4,
     "agreement": 0.25
   },
+  "agreement_rate": 0.8766816143497758,
+  "win_rate": 0.5322128851540616,
+  "trained_at": "2026-03-07T13:39:47.550561",
   "vol_stats": {
-    "mean": 0.01743559694578311,
-    "std": 0.008551105175092142
-  },
-  "return_std": 0.018496907455240623,
-  "metrics": {
-    "test_accuracy_filtered": 0.5663716814159292,
-    "test_f1_filtered": 0.6956521739130435,
-    "test_trade_pct": 0.6726190476190477,
-    "test_n_trades": 113,
-    "xgb_accuracy_unfiltered": 0.6011904761904762,
-    "baseline_accuracy": 0.5059523809523809
+    "mean": 0.01576744489588496,
+    "std": 0.0071965577256898885
   }
 }

@@ -86,7 +86,7 @@ def load_models(ticker: str):
     ticker_dir = MODELS_DIR / ticker.lower()
     aapl_dir   = MODELS_DIR / "lstm_price"
 
-    if (ticker_dir / "lstm" / "model.keras").exists():
+    if (ticker_dir / "lstm" / "model.h5").exists():
         model_dir    = ticker_dir
         lstm_dir     = ticker_dir / "lstm"
         xgb_dir      = ticker_dir / "xgb"
