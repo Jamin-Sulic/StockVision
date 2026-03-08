@@ -592,4 +592,4 @@ def _format_backtest_response(data: dict, from_cache: bool) -> dict:
             "equity_scorer": json.loads(data["equity_scorer"]) if data.get("equity_scorer") else [],
             "dates":         json.loads(data["trade_dates"])   if data.get("trade_dates")   else [],
         },
-    }
+    } 

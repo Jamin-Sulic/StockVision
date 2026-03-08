@@ -64,6 +64,85 @@ function TickerSearch({ value, onChange }: { value: string; onChange: (t: string
   );
 }
 
+// ─── Info Modal ───────────────────────────────────────────────────────────────
+function InfoModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-4"
+      onClick={onClose}>
+      <div className="bg-zinc-900 border border-zinc-700/60 rounded-2xl w-full max-w-lg shadow-2xl"
+        onClick={e => e.stopPropagation()}>
+
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800/60">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-black">SV</span>
+            </div>
+            <span className="text-sm font-bold text-zinc-100 tracking-tight">About StockVision</span>
+          </div>
+          <button onClick={onClose} className="text-zinc-600 hover:text-zinc-300 transition-colors text-lg leading-none">✕</button>
+        </div>
+
+        <div className="px-6 py-5 space-y-5 max-h-[70vh] overflow-y-auto">
+
+          <div className="space-y-2">
+            <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest">What is this?</h3>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              StockVision is a personal deep learning experiment exploring whether technical indicators can predict short-term stock price direction. It is purely a data science project — not a trading platform or financial service.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest">How it works</h3>
+            <div className="space-y-2">
+              {[
+                { label: "Bidirectional LSTM", desc: "Learns temporal price patterns from 60-day sequences across 22 engineered features (RSI, MACD, Bollinger Bands, momentum, volatility). Trained in Jupyter." },
+                { label: "XGBoost Classifier", desc: "Takes LSTM predictions as an additional feature alongside raw technicals to generate a directional UP/DOWN signal." },
+                { label: "Confidence Scorer", desc: "Combines LSTM magnitude, XGBoost probability, and model agreement to filter out low-confidence signals before flagging a trade." },
+                { label: "Infrastructure", desc: "FastAPI backend on Railway. Supabase PostgreSQL for predictions & cache. GitHub Actions runs daily predictions every weekday at 22:00 UTC. Frontend on Vercel." },
+              ].map(item => (
+                <div key={item.label} className="bg-zinc-800/40 border border-zinc-700/30 rounded-xl p-3 space-y-1">
+                  <div className="text-xs font-bold text-zinc-200">{item.label}</div>
+                  <div className="text-xs text-zinc-500 leading-relaxed">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest">Trained Tickers</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {["AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA", "JPM", "V"].map(t => (
+                <span key={t} className="text-xs font-bold px-2 py-0.5 bg-zinc-800 border border-zinc-700/40 rounded text-zinc-300 tracking-widest">{t}</span>
+              ))}
+            </div>
+            <p className="text-xs text-zinc-600">Trained on 10+ years of OHLCV data (2015–2025). Other tickers use a fallback model.</p>
+          </div>
+
+          <div className="bg-amber-500/10 border border-amber-500/25 rounded-xl p-4 space-y-1">
+            <div className="flex items-center gap-2">
+              <svg className="w-3.5 h-3.5 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">Disclaimer</span>
+            </div>
+            <p className="text-xs text-amber-200/60 leading-relaxed">
+              This tool is for educational and research purposes only. It is <strong className="text-amber-300">not financial advice</strong> and should not be used to make real investment decisions. Past model performance does not guarantee future results. Always do your own research.
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between pt-1 border-t border-zinc-800/60">
+            <span className="text-xs text-zinc-600">Built by Jamin Sulic · Questions or ideas?</span>
+            <a href="https://jamin-sulic.vercel.app/" target="_blank" rel="noopener noreferrer"
+              className="text-xs text-blue-400 hover:text-blue-300 transition-colors font-bold tracking-wide flex items-center gap-1">
+              Get in touch →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface LiveData {
   ticker: string;
@@ -98,11 +177,9 @@ interface HistoricalData {
   charts: { equity_bh: number[]; equity_xgb: number[]; equity_scorer: number[]; dates: string[] };
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 const fmt = (n: number, d = 2) => n?.toFixed(d) ?? "—";
 const pct = (n: number) => `${n >= 0 ? "+" : ""}${fmt(n * 100)}%`;
 
-// ─── Components ───────────────────────────────────────────────────────────────
 function SignalBadge({ signal }: { signal: LiveData["signal"] }) {
   const isUp = signal.direction === "UP";
   const isTrade = signal.trade;
@@ -201,6 +278,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [startDate, setStartDate] = useState("2024-01-01");
   const [endDate, setEndDate] = useState("2024-12-31");
+  const [showInfo, setShowInfo] = useState(false);
 
   function translateError(msg: string): string {
     if (msg.includes("Keine Prediction") || msg.includes("404") || msg.includes("not found"))
@@ -264,8 +342,10 @@ export default function Home() {
   }, [mode]);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+      {showInfo && <InfoModal onClose={() => setShowInfo(false)} />}
 
       {/* Header */}
       <header className="border-b border-zinc-800/60 px-6 py-4 flex items-center justify-between">
@@ -278,19 +358,23 @@ export default function Home() {
             <p className="text-xs text-zinc-500">LSTM + XGBoost Prediction Engine</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs text-zinc-400">API LIVE</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs text-zinc-400">API LIVE</span>
+          </div>
+          <button onClick={() => setShowInfo(true)}
+            className="w-7 h-7 rounded-full border border-zinc-700/60 bg-zinc-900/60 flex items-center justify-center text-zinc-400 hover:text-zinc-100 hover:border-zinc-500 transition-colors text-xs font-bold">
+            ?
+          </button>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 py-8 space-y-6">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-8 space-y-6">
 
         {/* Controls */}
         <div className="flex flex-wrap items-center gap-3">
           <TickerSearch value={ticker ?? ""} onChange={handleTickerSelect} />
-
-          {/* Mode Toggle */}
           <div className="flex gap-1 bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-1 ml-auto">
             {(["live", "historical"] as const).map(m => (
               <button key={m} onClick={() => setMode(m)}
@@ -363,7 +447,6 @@ export default function Home() {
         {mode === "live" && liveData && !loading && (
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Signal Card */}
               <div className="md:col-span-1 bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-5 space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-zinc-500 uppercase tracking-widest font-medium">Signal · {liveData.date}</span>
@@ -384,7 +467,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Price Card */}
               <div className="md:col-span-2 bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-5 space-y-3">
                 <span className="text-xs text-zinc-500 uppercase tracking-widest font-medium">{ticker} · Price Prediction</span>
                 <div className="flex items-end gap-4">
@@ -407,7 +489,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Score Breakdown */}
             <div className="bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-5">
               <span className="text-xs text-zinc-500 uppercase tracking-widest font-medium block mb-4">Score Breakdown</span>
               <div className="grid grid-cols-3 gap-4">
@@ -436,7 +517,6 @@ export default function Home() {
         {/* Historical View */}
         {mode === "historical" && histData && !loading && (
           <div className="space-y-4">
-            {/* Metrics Table */}
             <div className="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden">
               <div className="px-5 py-3 border-b border-zinc-800/60">
                 <span className="text-xs text-zinc-500 uppercase tracking-widest font-medium">
@@ -479,7 +559,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Equity Chart */}
             <div className="bg-zinc-900/60 border border-zinc-800/60 rounded-xl p-5 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-zinc-500 uppercase tracking-widest font-medium">Equity Curves · $10,000 Starting Capital</span>
@@ -495,7 +574,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <StatCard label="XGB vs BH" value={pct(histData.strategies.xgboost.total_return - histData.strategies.buy_and_hold.total_return)} sub="Alpha generated" />
               <StatCard label="XGB Sharpe" value={fmt(histData.strategies.xgboost.sharpe)} sub="Risk-adjusted return" />
@@ -505,6 +583,36 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-800/60 px-6 py-5 mt-8">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-3 text-xs text-zinc-600 flex-wrap">
+            <span>© {new Date().getFullYear()} Jamin Sulic</span>
+            <span className="text-zinc-800">·</span>
+            <span>For educational purposes only, not financial advice</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <a href="https://github.com/Jamin-Sulic/StockVision" target="_blank" rel="noopener noreferrer"
+              className="text-xs text-zinc-600 hover:text-zinc-300 transition-colors flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+              GitHub
+            </a>
+            <a href="https://jamin-sulic.vercel.app/" target="_blank" rel="noopener noreferrer"
+              className="text-xs text-blue-400 hover:text-blue-300 transition-colors font-bold flex items-center gap-1">
+              My Website →
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      {/* Floating Info Button */}
+      <button onClick={() => setShowInfo(true)}
+        className="fixed bottom-6 left-6 w-10 h-10 rounded-full bg-zinc-900 border border-zinc-700/60 flex items-center justify-center text-zinc-400 hover:text-zinc-100 hover:border-zinc-500 hover:bg-zinc-800 transition-all shadow-lg z-40 text-sm font-bold italic">
+        i
+      </button>
     </div>
   );
 }
